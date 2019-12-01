@@ -29,6 +29,6 @@ public class AdventOfCode
 
     public long GetPart2()
     {
-        return GetPart1() + Masses.Select(x => (int)(x / 3) - 2).Select(x => GetFuel(x)).Sum();
+        return  Masses.Select(x => GetFuel(x)).Sum();
     }
 }
