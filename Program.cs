@@ -25,21 +25,7 @@ namespace adventofcode2019
             var opcodes = LoadFlatInput("input-day2.txt");
             var day2 = new Day2(opcodes);
             Console.WriteLine($"Day 2 - pt1. {day2.GetDay2Part1()}");
-
-            for (var i = 0; i < 99; i++)
-            {
-                for (var j = 0; j < 99; j++)
-                {
-                    day2 = new Day2(opcodes);
-                    var value = day2.GetDay2Part2(i, j);
-
-                    if (value == 19690720)
-                    {
-                        Console.WriteLine($"i = {i}  j = {j}");
-                        Console.WriteLine($"Day 2 - pt2. {100 * i + j}");
-                    }
-                }
-            }
+            Console.WriteLine($"Day 2 - pt2. {day2.GetDay2Part2()}");
         }
     }
 }

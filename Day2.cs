@@ -10,28 +10,28 @@ public class Day2
         OpCodes = opcodes.Split(',', StringSplitOptions.None).Select(x => int.Parse(x)).ToArray();
     }
 
-    private void ProcessOpCodes()
+    private void ProcessOpCodes(int[] opCodes)
     {
-        for (var i = 0; i < OpCodes.Length; i += 4)
+        for (var i = 0; i < opCodes.Length; i += 4)
         {
-            var op = OpCodes[i];
+            var op = opCodes[i];
 
             if (op == 99)
             {
-                return;
+                break;
             }
 
-            var source1 = OpCodes[i + 1];
-            var source2 = OpCodes[i + 2];
-            var target = OpCodes[i + 3];
+            var source1 = opCodes[i + 1];
+            var source2 = opCodes[i + 2];
+            var target = opCodes[i + 3];
 
             if (op == 1)
             {
-                OpCodes[target] = OpCodes[source1] + OpCodes[source2];
+                opCodes[target] = opCodes[source1] + opCodes[source2];
             }
             else if (op == 2)
             {
-                OpCodes[target] = OpCodes[source1] * OpCodes[source2];
+                opCodes[target] = opCodes[source1] * opCodes[source2];
             }
             else 
             {
@@ -42,21 +42,35 @@ public class Day2
 
     public long GetDay2Part1()
     {
-        OpCodes[1] = 12;
-        OpCodes[2] = 2;
+        var opCodes = (int[])OpCodes.Clone();
 
-        ProcessOpCodes();
+        opCodes[1] = 12;
+        opCodes[2] = 2;
 
-        return OpCodes[0];
+        ProcessOpCodes(opCodes);
+
+        return opCodes[0];
     }
 
-    public long GetDay2Part2(int val1, int val2)
+    public long GetDay2Part2()
     {
-        OpCodes[1] = val1;
-        OpCodes[2] = val2;
 
-        ProcessOpCodes();
+        for (var i = 0; i < 99; i++) {
+            for (var j = 0; j < 99; j++) {
 
-        return OpCodes[0];
+                var opCodes = (int[])OpCodes.Clone();
+
+                opCodes[1] = i;
+                opCodes[2] = j;
+
+                ProcessOpCodes(opCodes);
+
+                if (opCodes[0] == 19690720) {
+                    return 100 * i + j;
+                }
+            }
+        }
+
+        return 0;
     }
 }
