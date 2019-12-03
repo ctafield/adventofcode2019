@@ -14,12 +14,15 @@ public class Day3
         public int X { get; set; } = 0;
         public int Y { get; set; } = 0;
 
+        public int Steps { get; set; } = 0;
+
         public object Clone()
         {
             return new XY
             {
                 X = X,
-                Y = Y
+                Y = Y,
+                Steps = Steps
             };
         }
     }
@@ -56,6 +59,7 @@ public class Day3
                 for (var i = 0; i < val; i++)
                 {
                     XY.X += 1;
+                    XY.Steps += 1;
                     Positions.Add(XY.Clone() as XY);
                 }
             }
@@ -64,6 +68,7 @@ public class Day3
                 for (var i = 0; i > val; i--)
                 {
                     XY.X -= 1;
+                    XY.Steps += 1;
                     Positions.Add(XY.Clone() as XY);
                 }
             }
@@ -76,6 +81,7 @@ public class Day3
                 for (var i = 0; i < val; i++)
                 {
                     XY.Y += 1;
+                    XY.Steps += 1;
                     Positions.Add(XY.Clone() as XY);
                 }
             }
@@ -84,6 +90,7 @@ public class Day3
                 for (var i = 0; i > val; i--)
                 {
                     XY.Y -= 1;
+                    XY.Steps += 1;
                     Positions.Add(XY.Clone() as XY);
                 }
             }
@@ -98,7 +105,7 @@ public class Day3
         Wire2Directions = allDirections[1].Split(',', StringSplitOptions.None).ToArray();
     }
 
-    public int GetDay3Part1()
+    public void GetDay3()
     {
         var w1_position = new Coords();
         var w2_position = new Coords();
@@ -119,17 +126,31 @@ public class Day3
 
         // Get all the matches
         var distances = new List<int>();
-        
+        var moves = new List<int>();
+
         var crosses = w1_position.Positions.Intersect(w2_position.Positions, new PositionComparer());
         foreach (var cross in crosses)
         {
+            // Part 1
             var distance = Math.Abs(cross.X) + Math.Abs(cross.Y);
             distances.Add(distance);
+
+            // Part 2
+            var index1 = w1_position.Positions.FirstOrDefault(w1 => w1.X == cross.X && w1.Y == cross.Y);
+            var steps1 = index1.Steps;
+
+            var index2 = w2_position.Positions.FirstOrDefault(w2 => w2.X == cross.X && w2.Y == cross.Y);
+            var steps2 = index2.Steps;
+
+            moves.Add(steps1 + steps2);
         }
 
-        return distances.Min();
-    }
+        var shortest = distances.Min();
+        var smallestMoves = moves.Min();
 
+        Console.WriteLine($"Day 3 - pt1. {shortest}");
+        Console.WriteLine($"Day 3 - pt2. {smallestMoves}");
+    }
     private class PositionComparer : IEqualityComparer<XY>
     {
         public bool Equals([AllowNull] XY x, [AllowNull] XY y)

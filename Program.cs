@@ -29,8 +29,7 @@ namespace adventofcode2019
 
             var paths = LoadFlatInput("input-day3.txt");
             var day3 = new Day3(paths);
-            var shortest = day3.GetDay3Part1();
-            Console.WriteLine($"Day 3 - pt1. {shortest}");
+            day3.GetDay3();
         }
     }
 }
