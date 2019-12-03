@@ -26,6 +26,11 @@ namespace adventofcode2019
             var day2 = new Day2(opcodes);
             Console.WriteLine($"Day 2 - pt1. {day2.GetDay2Part1()}");
             Console.WriteLine($"Day 2 - pt2. {day2.GetDay2Part2()}");
+
+            var paths = LoadFlatInput("input-day3.txt");
+            var day3 = new Day3(paths);
+            var shortest = day3.GetDay3Part1();
+            Console.WriteLine($"Day 3 - pt1. {shortest}");
         }
     }
 }
