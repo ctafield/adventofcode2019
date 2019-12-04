@@ -17,6 +17,14 @@ public class Day4
         "99",
     };
 
+    private bool IsDouble(string source, string match)
+    {
+        var first = source.IndexOf(match);
+        var last = source.LastIndexOf(match);
+
+        return (first != -1 && (first == last));
+    }
+
     private bool IsValid(int input, bool ignoreMultiples)
     {
         var stringInput = input.ToString();
@@ -49,13 +57,12 @@ public class Day4
         {
             foreach (var s in sequential)
             {
-                var first = stringInput.IndexOf(s);
-                var last = stringInput.LastIndexOf(s);
-                if (first != -1 && first != last)
+                var isDouble =  IsDouble(stringInput, s);
+                if (!isDouble)
                 {
                     // any other numbers match?
                     if (!sequential.Where(s2 => s2 != s)
-                                   .Any(s2 => stringInput.Contains(s2)))
+                                   .Any(s2 => IsDouble(stringInput, s2)))
                     {
                         return false;
                     }
@@ -98,11 +105,10 @@ public class Day4
         Console.WriteLine($"333556: {IsValid(333556, true)} - expected True");
         Console.WriteLine($"333557: {IsValid(333557, true)} - expected True");
         Console.WriteLine($"333355: {IsValid(333355, true)} - expected True");
-        Console.WriteLine($"124444 : {IsValid(124444 , true)} - expected False");
-        Console.WriteLine($"333444 : {IsValid(333444 , true)} - expected False");
+        Console.WriteLine($"124444 : {IsValid(124444, true)} - expected False");
+        Console.WriteLine($"333444 : {IsValid(333444, true)} - expected False");
 
-        //for (var i = 245182; i <= 790572; i++)
-        for (var i = 147981; i <= 691423; i++)
+        for (var i = 245182; i <= 790572; i++)        
         {
             if (IsValid(i, true))
             {
