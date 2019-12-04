@@ -4,18 +4,7 @@ using System.Linq;
 
 public class Day4
 {
-    private List<string> sequential = new List<string> {
-        "00",
-        "11",
-        "22",
-        "33",
-        "44",
-        "55",
-        "66",
-        "77",
-        "88",
-        "99",
-    };
+    private List<string> sequential = Enumerable.Range(0, 10).Select(s => $"{s}{s}").ToList();
 
     private bool IsDouble(string source, string match)
     {
@@ -57,7 +46,7 @@ public class Day4
         {
             foreach (var s in sequential)
             {
-                var isDouble =  IsDouble(stringInput, s);
+                var isDouble = IsDouble(stringInput, s);
                 if (!isDouble)
                 {
                     // any other numbers match?
@@ -108,7 +97,7 @@ public class Day4
         Console.WriteLine($"124444 : {IsValid(124444, true)} - expected False");
         Console.WriteLine($"333444 : {IsValid(333444, true)} - expected False");
 
-        for (var i = 245182; i <= 790572; i++)        
+        for (var i = 245182; i <= 790572; i++)
         {
             if (IsValid(i, true))
             {
