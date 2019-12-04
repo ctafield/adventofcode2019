@@ -17,24 +17,50 @@ public class Day4
         "99",
     };
 
-    private bool IsValid(int input)
+    private bool IsValid(int input, bool ignoreMultiples)
     {
         var stringInput = input.ToString();
 
-        if (stringInput.Length != 6) {
+        // 6 characters long
+        if (stringInput.Length != 6)
+        {
             return false;
         }
+
+        // sequential
         var lastChar = 0;
-        for (var i = 0; i < stringInput.Length; i++) {
+        for (var i = 0; i < stringInput.Length; i++)
+        {
             var thisChar = int.Parse(stringInput[i].ToString());
-            if (thisChar < lastChar) {
+            if (thisChar < lastChar)
+            {
                 return false;
             }
             lastChar = thisChar;
         }
 
-        if (!sequential.Any(s => stringInput.Contains(s))) {
+        // needs to have a sequential number in
+        if (!sequential.Any(s => stringInput.Contains(s)))
+        {
             return false;
+        }
+
+        if (ignoreMultiples)
+        {
+            foreach (var s in sequential)
+            {
+                var first = stringInput.IndexOf(s);
+                var last = stringInput.LastIndexOf(s);
+                if (first != -1 && first != last)
+                {
+                    // any other numbers match?
+                    if (!sequential.Where(s2 => s2 != s)
+                                   .Any(s2 => stringInput.Contains(s2)))
+                    {
+                        return false;
+                    }
+                }
+            }
         }
 
         return true;
@@ -44,13 +70,46 @@ public class Day4
     {
         var valid = new List<int>();
 
+        Console.WriteLine("Day 4 - pt1. Tests");
+        Console.WriteLine($"111111: {IsValid(111111, false)} - expected True");
+        Console.WriteLine($"223450: {IsValid(223450, false)} - expected False");
+        Console.WriteLine($"123789: {IsValid(123789, false)} - expected False");
+
         for (var i = 245182; i <= 790572; i++)
         {
-            if (IsValid(i)) {
+            if (IsValid(i, false))
+            {
                 valid.Add(i);
             }
         }
 
         Console.WriteLine($"Day 4 - pt1. {valid.Count()}");
+    }
+
+    public void GetPart2()
+    {
+        var valid = new List<int>();
+
+        Console.WriteLine("Day 4 - pt2. Tests");
+        Console.WriteLine($"112233: {IsValid(112233, true)} - expected True");
+        Console.WriteLine($"123444: {IsValid(123444, true)} - expected False");
+        Console.WriteLine($"111122: {IsValid(111122, true)} - expected True");
+        Console.WriteLine($"111223: {IsValid(111223, true)} - expected True");
+        Console.WriteLine($"333556: {IsValid(333556, true)} - expected True");
+        Console.WriteLine($"333557: {IsValid(333557, true)} - expected True");
+        Console.WriteLine($"333355: {IsValid(333355, true)} - expected True");
+        Console.WriteLine($"124444 : {IsValid(124444 , true)} - expected False");
+        Console.WriteLine($"333444 : {IsValid(333444 , true)} - expected False");
+
+        //for (var i = 245182; i <= 790572; i++)
+        for (var i = 147981; i <= 691423; i++)
+        {
+            if (IsValid(i, true))
+            {
+                valid.Add(i);
+            }
+        }
+
+        Console.WriteLine($"Day 4 - pt2. {valid.Count()}");
     }
 }

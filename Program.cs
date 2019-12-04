@@ -33,6 +33,7 @@ namespace adventofcode2019
 
             var day4 = new Day4();
             day4.GetPart1();
+            day4.GetPart2();
         }
     }
 }
