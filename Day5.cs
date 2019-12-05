@@ -1,13 +1,13 @@
 using System;
 using System.Linq;
 
-public class Day4
+public class Day5
 {
     private int[] OpCodes { get; set; }
 
     private int _input;
 
-    public Day4(string opcodes)
+    public Day5(string opcodes)
     {
         OpCodes = opcodes.Split(',', StringSplitOptions.None).Select(x => int.Parse(x)).ToArray();
     }
@@ -138,7 +138,7 @@ public class Day4
 
     public void GetPart1()
     {
-        Console.WriteLine("Day 4.");
+        Console.WriteLine("Day 5.");
 
         Console.WriteLine("Part 1 - Running...");
 
@@ -176,6 +176,6 @@ public class Day4
 
         ProcessOpCodes(part2OpCodes);
 
-        Console.WriteLine("Day 4 - Ended...");
+        Console.WriteLine("Day 5 - Ended...");
     }
 }
