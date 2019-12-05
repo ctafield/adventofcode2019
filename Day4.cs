@@ -5,6 +5,8 @@ public class Day4
 {
     private int[] OpCodes { get; set; }
 
+    private int _input;
+
     public Day4(string opcodes)
     {
         OpCodes = opcodes.Split(',', StringSplitOptions.None).Select(x => int.Parse(x)).ToArray();
@@ -64,12 +66,68 @@ public class Day4
             else if (op == 3)
             {
                 var target = opCodes[++i];
-                opCodes[target] = 1; // todo change?
+                opCodes[target] = _input;
             }
             else if (op == 4)
             {
                 var target = opCodes[++i];
-                Console.WriteLine("Output --> " + opCodes[target]);
+
+                var val1 = (modeP1 == 1) ? target : opCodes[target];
+                Console.WriteLine("Output --> " + val1);
+            }
+            else if (op == 5)
+            {
+                // jump if true
+                var source1 = opCodes[++i];
+                var source2 = opCodes[++i];
+
+                var val1 = (modeP1 == 1) ? source1 : opCodes[source1];
+                var val2 = (modeP2 == 1) ? source2 : opCodes[source2];
+
+                if (val1 > 0)
+                {
+                    i = val2 - 1; // +1 gets added on loop.
+                    continue;
+                }
+            }
+            else if (op == 6)
+            {
+                // jump if false
+                var source1 = opCodes[++i];
+                var source2 = opCodes[++i];
+
+                var val1 = (modeP1 == 1) ? source1 : opCodes[source1];
+                var val2 = (modeP2 == 1) ? source2 : opCodes[source2];
+
+                if (val1 == 0)
+                {
+                    i = val2 - 1; // +1 gets added on loop
+                    continue;
+                }
+            }
+            else if (op == 7)
+            {
+                // less than
+                var source1 = opCodes[++i];
+                var source2 = opCodes[++i];
+                var target = opCodes[++i];
+
+                var val1 = (modeP1 == 1) ? source1 : opCodes[source1];
+                var val2 = (modeP2 == 1) ? source2 : opCodes[source2];
+
+                opCodes[target] = (val1 < val2) ? 1 : 0;
+            }
+            else if (op == 8)
+            {
+                // equals
+                var source1 = opCodes[++i];
+                var source2 = opCodes[++i];
+                var target = opCodes[++i];
+
+                var val1 = (modeP1 == 1) ? source1 : opCodes[source1];
+                var val2 = (modeP2 == 1) ? source2 : opCodes[source2];
+
+                opCodes[target] = (val1 == val2) ? 1 : 0;
             }
             else
             {
@@ -80,17 +138,44 @@ public class Day4
 
     public void GetPart1()
     {
-        Console.WriteLine("Day 4 - pt1. Running...");
+        Console.WriteLine("Day 4.");
 
-        var opCodes = (int[])OpCodes.Clone();
+        Console.WriteLine("Part 1 - Running...");
 
-        ProcessOpCodes(opCodes);
+        _input = 1;
+        var part1OpCodes = (int[])OpCodes.Clone();
+        ProcessOpCodes(part1OpCodes);
 
-        Console.WriteLine("Day 4 - pt1. Ended...");
-    }
+        Console.WriteLine("Tests....");
 
-    public long GetPart2()
-    {
-        return 0;
+        var testOps = new[] {
+            3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,
+            1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,
+            999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99
+        };
+
+        _input = 7;
+        Console.WriteLine("Expect 999");
+        var test1 = (int[])testOps.Clone();
+        ProcessOpCodes(test1);
+
+        _input = 8;
+        Console.WriteLine("Expect 1000");
+        var test2 = (int[])testOps.Clone();
+        ProcessOpCodes(test2);
+
+        _input = 9;
+        Console.WriteLine("Expect 1001");
+        var test3 = (int[])testOps.Clone();
+        ProcessOpCodes(test3);
+
+        Console.WriteLine("Part 2. Running...");
+
+        _input = 5;
+        var part2OpCodes = (int[])OpCodes.Clone();
+
+        ProcessOpCodes(part2OpCodes);
+
+        Console.WriteLine("Day 4 - Ended...");
     }
 }
