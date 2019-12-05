@@ -30,6 +30,10 @@ namespace adventofcode2019
             var paths = LoadFlatInput("input-day3.txt");
             var day3 = new Day3(paths);
             day3.GetDay3();
+
+            var opcodesDay4 = LoadFlatInput("input-day4.txt");
+            var day4 = new Day4(opcodesDay4);
+            day4.GetPart1();
         }
     }
 }

@@ -12,7 +12,7 @@ public class Day2
 
     private void ProcessOpCodes(int[] opCodes)
     {
-        for (var i = 0; i < opCodes.Length; i += 4)
+        for (var i = 0; i < opCodes.Length; i ++)
         {
             var op = opCodes[i];
 
@@ -21,16 +21,20 @@ public class Day2
                 break;
             }
 
-            var source1 = opCodes[i + 1];
-            var source2 = opCodes[i + 2];
-            var target = opCodes[i + 3];
-
             if (op == 1)
             {
+                var source1 = opCodes[++i];
+                var source2 = opCodes[++i];
+                var target = opCodes[++i];
+
                 opCodes[target] = opCodes[source1] + opCodes[source2];
             }
             else if (op == 2)
             {
+                var source1 = opCodes[++i];
+                var source2 = opCodes[++i];
+                var target = opCodes[++i];
+
                 opCodes[target] = opCodes[source1] * opCodes[source2];
             }
             else 
