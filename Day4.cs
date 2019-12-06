@@ -4,7 +4,7 @@ using System.Linq;
 
 public class Day4
 {
-    private List<string> sequential = Enumerab le.Range(0, 10).Select(s => $"{s}{s}").ToList();
+    private List<string> sequential = Enumerable.Range(0, 10).Select(s => $"{s}{s}").ToList();
 
     private bool IsDouble(string source, string match)
     {
