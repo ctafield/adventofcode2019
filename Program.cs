@@ -13,7 +13,7 @@ namespace adventofcode2019
         {
             return System.IO.File.ReadAllText(fileName);
         }
-
+ 
         static void Main(string[] args)
         {
             var masses = LoadInput("input-day1.txt");
