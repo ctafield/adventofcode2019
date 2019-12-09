@@ -99,11 +99,12 @@ public class Day6
         // get path to santa
         var santaPath = GetPath(SANTA, COM);
 
-        // get the first time they diverge
+        // get the first time they converge
         var cross = youPath.Intersect(santaPath).FirstOrDefault();
         
-        // now count steps from YOU to 
+        // now count steps from YOU to convergence point
         var youSteps = GetPath(YOU, cross).Count() - 1;
+        // now count steps from SANTA to convergence point
         var santaSteps = GetPath(SANTA, cross).Count() - 1;
 
         return youSteps + santaSteps;
