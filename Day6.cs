@@ -4,6 +4,12 @@ using System.Linq;
 
 public class Day6
 {
+    private const string COM = "COM";
+
+    private const string YOU = "YOU";
+
+    private const string SANTA = "SAN";
+
     public class Planet
     {
         public string Id { get; set; }
@@ -44,7 +50,8 @@ public class Day6
         {
             total += 1;
             var childPlanet = Planets.FirstOrDefault(p => p.Id == cp);
-            if (childPlanet == null) {
+            if (childPlanet == null)
+            {
                 continue;
             }
             total += GetAllChildren(childPlanet);
@@ -63,5 +70,42 @@ public class Day6
         }
 
         return total;
+    }
+
+    private IList<string> GetPath(string target, string endPlanet)
+    {
+        var current = Planets.FirstOrDefault(x => x.Children.Contains(target));
+        var paths = new List<string> {
+            current.Id
+        };
+
+        while (current != null && current.Id != endPlanet)
+        {
+            current = Planets.FirstOrDefault(x => x.Children.Contains(current.Id));
+            if (current != null)
+            {
+                paths.Add(current.Id);
+            }
+        }
+
+        return paths;
+    }
+
+    public int GetPart2()
+    {
+
+        // get path to you
+        var youPath = GetPath(YOU, COM);
+        // get path to santa
+        var santaPath = GetPath(SANTA, COM);
+
+        // get the first time they diverge
+        var cross = youPath.Intersect(santaPath).FirstOrDefault();
+        
+        // now count steps from YOU to 
+        var youSteps = GetPath(YOU, cross).Count() - 1;
+        var santaSteps = GetPath(SANTA, cross).Count() - 1;
+
+        return youSteps + santaSteps;
     }
 }
