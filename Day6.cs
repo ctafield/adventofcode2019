@@ -1,13 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 public class Day6
 {
-    private class Planet
+    public class Planet
     {
         public string Id { get; set; }
 
-        public IList<string> Children { get; set; } 
+        public IList<string> Children { get; set; }
     }
 
     private IList<Planet> Planets { get; set; } = new List<Planet>();
@@ -36,9 +37,31 @@ public class Day6
         }
     }
 
+    private int GetAllChildren(Planet planet)
+    {
+        var total = 0;
+        foreach (var cp in planet.Children)
+        {
+            total += 1;
+            var childPlanet = Planets.FirstOrDefault(p => p.Id == cp);
+            if (childPlanet == null) {
+                continue;
+            }
+            total += GetAllChildren(childPlanet);
+        }
+
+        return total;
+    }
+
     public int GetPart1()
     {
-        
-        return 0;
+        var total = 0;
+
+        foreach (var planet in Planets)
+        {
+            total += GetAllChildren(planet);
+        }
+
+        return total;
     }
 }
