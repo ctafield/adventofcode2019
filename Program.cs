@@ -38,6 +38,10 @@ namespace adventofcode2019
             var opcodesDay5 = LoadFlatInput("input-day5.txt");
             var day5 = new Day5(opcodesDay5);
             day5.GetPart1();
+
+            var orbits = LoadInput("input-day6.txt");
+            var day6 = new Day6(orbits);
+            day5.GetPart1();
         }
     }
 }
