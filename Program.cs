@@ -43,6 +43,10 @@ namespace adventofcode2019
             var day6 = new Day6(orbits);
             Console.WriteLine($"Day 6 - pt1. {day6.GetPart1()}");
             Console.WriteLine($"Day 6 - pt2. {day6.GetPart2()}");
+
+            var day7input = LoadFlatInput("input-day7.txt");
+            var day7 = new Day7(day7input);
+            day7.GetPart1();
         }
     }
 }
